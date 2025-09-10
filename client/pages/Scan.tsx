@@ -9,7 +9,10 @@ export default function Scan() {
 
   return (
     <div className="mx-auto max-w-4xl p-6">
-       <a className="text-blue-700 inline-block " href="/"><FontAwesomeIcon icon={faCircleLeft} /></a>
+      <a className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border bg-background shadow-sm transition hover:bg-primary hover:text-primary-foreground hover:shadow-lg" href="/">
+        <FontAwesomeIcon icon={faCircleLeft} />
+        <span>Back</span>
+        </a>
       <h1 className="text-2xl font-semibold mb-4">Scan Attendance</h1>
       <QRScanner
         onResult={(r) => {

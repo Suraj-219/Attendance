@@ -49,7 +49,10 @@ export default function SessionRun() {
 
   return (
     <div className="mx-auto max-w-6xl p-6">
-      <a className="text-blue-700 inline-block " href="/"><FontAwesomeIcon icon={faCircleLeft} /></a>
+     <a className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border bg-background shadow-sm transition hover:bg-primary hover:text-primary-foreground hover:shadow-lg" href="/">
+          <FontAwesomeIcon icon={faCircleLeft} />
+            <span>Back</span>
+      </a>
       <h1 className="text-2xl font-semibold mb-4">Run Session</h1>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
         <div className="space-y-4">
