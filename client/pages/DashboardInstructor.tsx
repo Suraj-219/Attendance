@@ -5,7 +5,7 @@ export default function DashboardInstructor() {
     <div className="mx-auto max-w-7xl p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Instructor Dashboard</h1>
-        <a href="/session" className="px-4 py-2 rounded-md bg-primary text-primary-foreground">Start session</a>
+  <a href="/face-demo" className="px-4 py-2 rounded-md bg-primary text-primary-foreground">Face Demo</a>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -18,7 +18,7 @@ export default function DashboardAdmin() {
           <h2 className="font-semibold mb-2">Management</h2>
           <ul className="space-y-2 text-sm">
             <li><a href="/records" className="underline">Records & CSV export</a></li>
-            <li><a href="/session" className="underline">Run/monitor sessions</a></li>
+            <li><a href="/face-demo" className="underline">Face Recognition Demo</a></li>
           </ul>
         </div>
       </div>

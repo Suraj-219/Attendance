@@ -1,5 +1,11 @@
 export type Role = "Student" | "Instructor" | "Admin";
-export interface User { name: string; email: string; password: string; role: Role }
+export interface User { 
+  name: string; 
+  email: string; 
+  password: string; 
+  role: Role;
+  faceDescriptor?: Float32Array; // Face recognition descriptor for students
+}
 
 const USERS_KEY = "users";
 const CURRENT_USER_KEY = "currentUser";

@@ -10,3 +10,22 @@
 export interface DemoResponse {
   message: string;
 }
+
+/**
+ * Face recognition API types
+ */
+export interface FaceRecognitionRequest {
+  descriptor: number[]; // Float32Array converted to regular array for JSON
+  threshold?: number;
+}
+
+export interface FaceRecognitionResponse {
+  success: boolean;
+  user?: {
+    name: string;
+    email: string;
+    role: string;
+  };
+  distance?: number;
+  message: string;
+}

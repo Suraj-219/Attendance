@@ -20,7 +20,7 @@ export default function DashboardStudent() {
       <div className="bg-card border rounded-xl p-6">
         <h2 className="font-semibold mb-3">Actions</h2>
         <div className="flex flex-wrap gap-2">
-          <a href="/scan" className="px-4 py-2 rounded-md bg-primary text-primary-foreground">Scan now</a>
+          <a href="/face-demo" className="px-4 py-2 rounded-md bg-primary text-primary-foreground">Face Recognition Demo</a>
           <a href="/records" className="px-4 py-2 rounded-md border">My records</a>
         </div>
       </div>
