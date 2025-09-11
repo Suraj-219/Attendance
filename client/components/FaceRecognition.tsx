@@ -28,6 +28,11 @@ export default function FaceRecognition({
   const [detectionResult, setDetectionResult] = useState<'success' | 'error' | null>(null);
   const [message, setMessage] = useState('');
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [location, setLocation] = useState<{ latitude: number | null; longitude: number | null; error: string | null }>({
+    latitude: null,
+    longitude: null,
+    error: null
+  });
 
   // Load face-api.js models
   useEffect(() => {
@@ -58,6 +63,46 @@ export default function FaceRecognition({
   }, [onError]);
 
 
+  // Get GPS location
+  const getLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      setLocation({ latitude: null, longitude: null, error: 'Geolocation is not supported by this browser.' });
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+        setMessage('Location acquired successfully.');
+      },
+      (error) => {
+        let errorMessage = 'Unable to retrieve your location.';
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = 'Location access denied by user.';
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Location information is unavailable.';
+            break;
+          case error.TIMEOUT:
+            errorMessage = 'Location request timed out.';
+            break;
+        }
+        setLocation({ latitude: null, longitude: null, error: errorMessage });
+        setMessage(errorMessage);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000 // 5 minutes
+      }
+    );
+  }, []);
+
   // Start camera stream
   const startCamera = useCallback(async () => {
     try {
@@ -68,6 +113,9 @@ export default function FaceRecognition({
 
       setMessage('Starting camera...');
       setCameraError(null);
+
+      // Get GPS location when starting camera
+      getLocation();
       
       // Check if getUserMedia is supported
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -145,7 +193,7 @@ export default function FaceRecognition({
         onError('Failed to access camera. Please try again.');
       }
     }
-  }, [modelsLoaded, onError]);
+  }, [modelsLoaded, onError, getLocation]);
 
   // No auto-start: camera will only start when user clicks "Start Camera"
 
@@ -288,9 +336,9 @@ export default function FaceRecognition({
                     <XCircle className="h-12 w-12 mx-auto mb-2" />
                     <p className="font-medium">Camera Error</p>
                     <p className="text-sm mb-3">{cameraError}</p>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
+                    <Button
+                      size="sm"
+                      variant="outline"
                       onClick={() => {
                         setCameraError(null);
                         startCamera();
@@ -304,9 +352,24 @@ export default function FaceRecognition({
               )}
             </div>
 
+            {/* Location Display */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <h3 className="text-sm font-medium text-blue-800 mb-2">Location Information</h3>
+              {location.error ? (
+                <p className="text-sm text-red-600">{location.error}</p>
+              ) : location.latitude && location.longitude ? (
+                <div className="text-sm text-blue-700">
+                  <p>Latitude: {location.latitude.toFixed(6)}</p>
+                  <p>Longitude: {location.longitude.toFixed(6)}</p>
+                </div>
+              ) : (
+                <p className="text-sm text-blue-600">Acquiring location...</p>
+              )}
+            </div>
+
             <div className="flex gap-2 justify-center">
-              <Button 
-                onClick={detectFace} 
+              <Button
+                onClick={detectFace}
                 disabled={isDetecting}
                 className="flex-1"
               >

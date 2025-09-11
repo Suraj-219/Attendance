@@ -62,7 +62,7 @@ export default function Login() {
           >
             Password Login
           </button>
-          <button
+          {/* <button
             onClick={() => setLoginMethod('face')}
             className={`px-4 py-2 rounded-md font-medium transition ${
               loginMethod === 'face'
@@ -71,7 +71,7 @@ export default function Login() {
             }`}
           >
            Face Recognition
-          </button>
+          </button> */}
         </div>
 
         {loginMethod === 'password' ? (
